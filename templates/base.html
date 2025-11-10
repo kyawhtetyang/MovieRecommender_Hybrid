@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+<title>Movie Recommender v8</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header><h1>Movie Recommender v8</h1></header>
+<nav>
+<a href="/">Home</a> | <a href="/dashboard">Dashboard</a> | <a href="/login">Login</a> | <a href="/signup">Signup</a>
+</nav>
+<main>
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>
+

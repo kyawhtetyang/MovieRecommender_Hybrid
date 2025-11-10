@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Dashboard for User {{ user_id }}</h2>
+
+<p><a href="{{ url_for('rate') }}">Rate a movie</a></p>
+
+<!-- Link to see recommendations for current user -->
+<p><a href="{{ url_for('recommend') }}?user_id={{ user_id }}">See recommendations</a></p>
+
+<!-- Optional: Display recommended movies directly on dashboard -->
+{% if movies %}
+<h3>Your Top Recommendations:</h3>
+<ul>
+  {% for movie in movies %}
+  <li>{{ movie["title"] }} ({{ movie["year"] }}) - {{ movie["genres"] }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}
+

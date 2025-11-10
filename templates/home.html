@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Welcome to Movie Recommender v8!</h2>
+<p>Select a user to see recommendations:</p>
+<form action="/recommend" method="get">
+<select name="user_id">
+{% for u in users %}
+<option value="{{ u['id'] }}">User {{ u['id'] }}</option>
+{% endfor %}
+</select>
+<button type="submit">Show Recommendations</button>
+</form>
+{% endblock %}
+
