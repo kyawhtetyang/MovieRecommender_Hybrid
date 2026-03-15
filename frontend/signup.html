@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup · Movie Recommender v8</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-page="signup">
+    <header class="site-header">
+      <h1>Movie Recommender v8</h1>
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/login.html">Login</a>
+        <a class="active" href="/signup.html">Signup</a>
+      </nav>
+    </header>
+    <main class="content">
+      <h2>Signup</h2>
+      <form id="signup-form">
+        <input type="text" name="username" id="signup-username" placeholder="Username" required />
+        <input type="password" name="password" id="signup-password" placeholder="Password" required />
+        <button type="submit">Signup</button>
+      </form>
+      <div class="status" id="signup-status"></div>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>
