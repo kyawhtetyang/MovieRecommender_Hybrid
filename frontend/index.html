@@ -50,9 +50,159 @@
         </article>
         <article>
           <h3>Next Upgrade</h3>
-          <p>Standalone React frontend with richer filters and personalization controls.</p>
+          <p>FastAPI API + slim frontend focus the experience on the ML core.</p>
         </article>
       </section>
+
+      <section class="demo">
+        <div class="panel">
+          <p class="eyebrow">Live Demo</p>
+          <h2>Try the recommender</h2>
+          <p class="muted">
+            Sign in and fetch recommendations from the hybrid model. Demo login is
+            <strong>demo / demo1234</strong>.
+          </p>
+          <form id="login-form" class="form">
+            <label class="field">
+              <span>Username</span>
+              <input id="login-username" type="text" placeholder="demo" required />
+            </label>
+            <label class="field">
+              <span>Password</span>
+              <input id="login-password" type="password" placeholder="demo1234" required />
+            </label>
+            <button class="btn primary" type="submit">Sign in</button>
+          </form>
+          <p id="login-status" class="status"></p>
+        </div>
+
+        <div class="panel">
+          <p class="eyebrow">Recommendations</p>
+          <h2>Get results</h2>
+          <p class="muted">Choose a user and request fresh recommendations.</p>
+          <div class="form-row">
+            <label class="field grow">
+              <span>User</span>
+              <select id="user-select"></select>
+            </label>
+            <button id="recommend-btn" class="btn primary" type="button">Show Recommendations</button>
+          </div>
+          <p id="recommend-status" class="status"></p>
+          <div id="results" class="results"></div>
+        </div>
+      </section>
     </main>
+    <script>
+      (() => {
+        const API_BASE = window.MOVIE_REC_API_BASE || "https://movie-recommender-hybrid.onrender.com";
+        const tokenKey = "movieRecToken";
+        let token = localStorage.getItem(tokenKey) || "";
+
+        const loginForm = document.getElementById("login-form");
+        const loginStatus = document.getElementById("login-status");
+        const userSelect = document.getElementById("user-select");
+        const recommendBtn = document.getElementById("recommend-btn");
+        const recommendStatus = document.getElementById("recommend-status");
+        const results = document.getElementById("results");
+
+        const apiFetch = async (path, options = {}) => {
+          const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+          if (token) {
+            headers.Authorization = `Bearer ${token}`;
+          }
+          const response = await fetch(`${API_BASE}${path}`, { ...options, headers });
+          const contentType = response.headers.get("content-type") || "";
+          const payload = contentType.includes("application/json") ? await response.json() : null;
+          if (!response.ok) {
+            const message = payload?.detail || "Request failed";
+            throw new Error(message);
+          }
+          return payload;
+        };
+
+        const setStatus = (el, message, isError = false) => {
+          el.textContent = message;
+          el.classList.toggle("error", isError);
+        };
+
+        const loadUsers = async () => {
+          try {
+            setStatus(recommendStatus, "Loading users...");
+            const users = await apiFetch("/api/users");
+            userSelect.innerHTML = "";
+            users.forEach((user) => {
+              const option = document.createElement("option");
+              option.value = String(user.id);
+              option.textContent = user.username ? `${user.username} (ID ${user.id})` : `User ${user.id}`;
+              userSelect.appendChild(option);
+            });
+            setStatus(recommendStatus, "");
+          } catch (err) {
+            setStatus(recommendStatus, err.message, true);
+          }
+        };
+
+        const renderResults = (items) => {
+          results.innerHTML = "";
+          if (!items || items.length === 0) {
+            results.innerHTML = "<p class='muted'>No recommendations yet. Try another user.</p>";
+            return;
+          }
+          items.forEach((movie, index) => {
+            const card = document.createElement("div");
+            card.className = "result-card";
+            card.innerHTML = `
+              <div class="result-rank">#${index + 1}</div>
+              <div>
+                <h4>${movie.title}</h4>
+                <p>${movie.genres || "Genres unavailable"} · ${movie.year || "Year?"}</p>
+              </div>
+            `;
+            results.appendChild(card);
+          });
+        };
+
+        loginForm.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const username = document.getElementById("login-username").value.trim();
+          const password = document.getElementById("login-password").value.trim();
+          if (!username || !password) {
+            setStatus(loginStatus, "Please enter username and password.", true);
+            return;
+          }
+          try {
+            setStatus(loginStatus, "Signing in...");
+            const payload = await apiFetch("/api/login", {
+              method: "POST",
+              body: JSON.stringify({ username, password })
+            });
+            token = payload.token;
+            localStorage.setItem(tokenKey, token);
+            setStatus(loginStatus, `Welcome ${payload.user.username}.`);
+            await loadUsers();
+          } catch (err) {
+            setStatus(loginStatus, err.message, true);
+          }
+        });
+
+        recommendBtn.addEventListener("click", async () => {
+          const userId = userSelect.value;
+          if (!userId) {
+            setStatus(recommendStatus, "Select a user first.", true);
+            return;
+          }
+          try {
+            setStatus(recommendStatus, "Fetching recommendations...");
+            const data = await apiFetch(`/api/recommendations?user_id=${userId}`);
+            renderResults(data.results);
+            setStatus(recommendStatus, "");
+          } catch (err) {
+            setStatus(recommendStatus, err.message, true);
+          }
+        });
+
+        loadUsers();
+      })();
+    </script>
   </body>
 </html>

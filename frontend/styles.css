@@ -145,6 +145,123 @@ h1 {
   line-height: 1.5;
 }
 
+.demo {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.panel {
+  padding: 22px;
+  border-radius: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.muted {
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.form {
+  display: grid;
+  gap: 12px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.field span {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 11px;
+}
+
+.field input,
+.field select {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.field input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.field select {
+  min-width: 180px;
+}
+
+.field.grow {
+  flex: 1;
+}
+
+.status {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.status.error {
+  color: #ff8a8a;
+}
+
+.results {
+  display: grid;
+  gap: 12px;
+}
+
+.result-card {
+  display: flex;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.result-card h4 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+.result-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.result-rank {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 42px;
+}
+
 @media (max-width: 720px) {
   .page {
     padding-top: 48px;

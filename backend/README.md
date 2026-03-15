@@ -5,9 +5,10 @@ Features:
 1. Web interface (Flask) with home, dashboard, rate, signup/login, recommend pages
 2. SQLite database for users, ratings, movies
 3. Hybrid recommendation engine (user/item/content/latent)
-4. Dynamic recommendations after ratings
-5. Logging and error tracking
-6. MVP ready for future analytics & REST API
+4. FastAPI JSON API for modern frontend integration
+5. Dynamic recommendations after ratings
+6. Logging and error tracking
+7. MVP ready for future analytics & REST API
 
 Run:
 
@@ -27,6 +28,23 @@ python app.py
 python main.py --user 1 --visualize
 python predict.py
 ```
+
+FastAPI API (for React/Vercel frontend):
+
+```bash
+cd backend
+pip install -r requirements.txt
+cp config/config.example.json config/config.json
+uvicorn api:app --host 0.0.0.0 --port 8000
+```
+
+API endpoints:
+- `GET /api/health`
+- `GET /api/users`
+- `POST /api/signup`
+- `POST /api/login`
+- `GET /api/recommendations?user_id=1`
+- `POST /api/rate` (requires `Authorization: Bearer <token>`)
 
 Configuration:
 
