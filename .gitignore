@@ -35,7 +35,7 @@ models/
 *.joblib
 
 # Data files
-data/
+data/*
 *.csv
 *.json
 *.txt
@@ -43,3 +43,4 @@ data/
 # Allow sample config to be committed
 !config/
 !config/config.example.json
+!data/demo.db

@@ -28,10 +28,10 @@ python predict.py
 
 Configuration:
 
+- `data/demo.db` is included for a quick demo (sample users, ratings, movies).
 - `config/config.json` is required for local runs and is not committed.
 - You can also override config values with env vars:
-  - `DATABASE_FILE` (default: `data/app.db`)
+  - `DATABASE_FILE` (default: `data/demo.db`)
   - `OUTPUT_DIR` (default: `output`)
   - `EMBEDDING_FILE` (default: `output/embeddings.npy`)
 - Set `FLASK_SECRET_KEY` in production.
-

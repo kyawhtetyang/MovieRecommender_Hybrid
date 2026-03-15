@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 DEFAULT_CONFIG: dict[str, Any] = {
-    "database_file": "data/app.db",
+    "database_file": "data/demo.db",
     "output_dir": "output",
     "embedding_file": "output/embeddings.npy",
 }
