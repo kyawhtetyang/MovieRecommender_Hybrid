@@ -1,10 +1,9 @@
-import json
 import argparse
 from modules.pipeline import Pipeline
 from modules.data_manager import DataManager
+from config_loader import load_config
 
-with open("config/config.json") as f:
-    config = json.load(f)
+config = load_config()
 
 dm = DataManager(config)
 dm.init_db()
@@ -21,4 +20,3 @@ pipeline.run_hybrid_weights()
 # safe mapping user_id -> row index
 user_idx = dm.user_id_to_index(args.user)
 pipeline.predict_for_user(user_idx, visualize=args.visualize)
-

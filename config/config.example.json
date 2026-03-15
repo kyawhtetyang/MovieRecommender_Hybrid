@@ -1,0 +1,5 @@
+{
+  "database_file": "data/app.db",
+  "output_dir": "output",
+  "embedding_file": "output/embeddings.npy"
+}

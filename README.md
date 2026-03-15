@@ -13,6 +13,9 @@ Run:
 
 ```bash
 conda activate tf
+pip install -r requirements.txt
+cp config/config.example.json config/config.json
+# optional: export FLASK_SECRET_KEY="your-secret"
 python train.py
 python train_hybrid_weights.py
 python app.py
@@ -21,5 +24,14 @@ python app.py
 # Optional: Command line prediction
 python main.py --user 1 --visualize
 python predict.py
+```
 
+Configuration:
+
+- `config/config.json` is required for local runs and is not committed.
+- You can also override config values with env vars:
+  - `DATABASE_FILE` (default: `data/app.db`)
+  - `OUTPUT_DIR` (default: `output`)
+  - `EMBEDDING_FILE` (default: `output/embeddings.npy`)
+- Set `FLASK_SECRET_KEY` in production.
 

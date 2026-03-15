@@ -1,18 +1,17 @@
 from flask import Flask, render_template, request, redirect, session, url_for
 import sqlite3
-import json
 import time
 from modules.pipeline import Pipeline
 from modules.data_manager import DataManager
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from config_loader import load_config
 
 # Load config
-with open("config/config.json") as f:
-    config = json.load(f)
+config = load_config()
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev-secret-key-change-me")
 
 # Initialize pipeline and DB
 pipeline = Pipeline(config)
@@ -150,5 +149,4 @@ def recommend():
 # Run server
 if __name__=="__main__":
     app.run(debug=True)
-
 

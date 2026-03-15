@@ -40,3 +40,6 @@ data/
 *.json
 *.txt
 
+# Allow sample config to be committed
+!config/
+!config/config.example.json
