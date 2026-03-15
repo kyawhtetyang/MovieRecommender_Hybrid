@@ -44,3 +44,5 @@ data/*
 !config/
 !config/config.example.json
 !data/demo.db
+!requirements.txt
+!requirements-train.txt

@@ -14,6 +14,7 @@ Run:
 ```bash
 conda activate tf
 pip install -r requirements.txt
+pip install -r requirements-train.txt
 cp config/config.example.json config/config.json
 # optional: export FLASK_SECRET_KEY="your-secret"
 python train.py
@@ -30,6 +31,7 @@ Configuration:
 
 - `data/demo.db` is included for a quick demo (sample users, ratings, movies).
 - `config/config.json` is required for local runs and is not committed.
+- For demo-only runs (no training), `requirements.txt` is sufficient.
 - You can also override config values with env vars:
   - `DATABASE_FILE` (default: `data/demo.db`)
   - `OUTPUT_DIR` (default: `output`)

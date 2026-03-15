@@ -1,18 +1,25 @@
 from modules.data_manager import DataManager
-from modules.similarity_models import SimilarityModels
-from modules.latent_model import LatentModel
 from modules.hybrid_recommender import HybridRecommender
-from modules.evaluator_visualizer import EvaluatorVisualizer
 
 class Pipeline:
     def __init__(self, config):
         self.config = config
         self.data_manager = DataManager(config)
-        self.sim_models = SimilarityModels()
-        self.latent_model = LatentModel()
+        self.sim_models = None
+        self.latent_model = None
         self.hybrid = HybridRecommender()
-        self.evaluator = EvaluatorVisualizer()
+        self.evaluator = None
         self.movies_df = None  # will hold movies metadata
+
+    def _ensure_training_modules(self):
+        if self.sim_models is None or self.latent_model is None or self.evaluator is None:
+            from modules.similarity_models import SimilarityModels
+            from modules.latent_model import LatentModel
+            from modules.evaluator_visualizer import EvaluatorVisualizer
+
+            self.sim_models = SimilarityModels()
+            self.latent_model = LatentModel()
+            self.evaluator = EvaluatorVisualizer()
 
     # TRAINING PIPELINE
     def run_training(self):
@@ -20,6 +27,7 @@ class Pipeline:
         Loads data, computes similarity matrices, trains latent model,
         and saves all matrices for later use.
         """
+        self._ensure_training_modules()
         # Load & preprocess
         user_item, movies_df = self.data_manager.load_and_preprocess()
         self.movies_df = movies_df
@@ -40,6 +48,7 @@ class Pipeline:
         Loads matrices and performs brute-force grid search
         to find optimal hybrid weights.
         """
+        self._ensure_training_modules()
         user_item, user_sim, item_sim, content_sim, latent_pred = self.data_manager.load_matrices()
         weights = self.hybrid.optimize_weights(user_item, user_sim, item_sim, content_sim, latent_pred)
         print("Optimal hybrid weights:", weights)
@@ -73,6 +82,7 @@ class Pipeline:
 
         # Optional visualization
         if visualize:
+            self._ensure_training_modules()
             self.evaluator.visualize_matrices(user_sim, item_sim, content_sim, latent_pred)
 
         print(f"Top recommended movie IDs for user {user_idx}:", top_movies)
