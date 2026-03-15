@@ -28,21 +28,31 @@ Thumbs.db
 .idea/
 
 # ML model outputs
-models/
+backend/models/
 *.h5
 *.pt
 *.pkl
 *.joblib
 
 # Data files
-data/*
+backend/data/*
 *.csv
 *.json
 *.txt
 
 # Allow sample config to be committed
-!config/
-!config/config.example.json
-!data/demo.db
-!requirements.txt
-!requirements-train.txt
+!backend/config/
+!backend/config/config.example.json
+!backend/data/demo.db
+!backend/requirements.txt
+!backend/requirements-train.txt
+
+# Backend env files
+backend/.env
+backend/.env.*
+
+# Frontend build/output
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.*
