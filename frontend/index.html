@@ -3,33 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Movie Recommender v8</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <title>My Google AI Studio App</title>
   </head>
-  <body data-page="home">
-    <header class="site-header">
-      <h1>Movie Recommender v8</h1>
-      <nav>
-        <a class="active" href="/index.html">Home</a>
-        <a href="/dashboard.html">Dashboard</a>
-        <a href="/login.html">Login</a>
-        <a href="/signup.html">Signup</a>
-      </nav>
-    </header>
-    <main class="content">
-      <h2>Welcome to Movie Recommender v8!</h2>
-      <p>Select a user to see recommendations:</p>
-      <form id="home-form">
-        <select id="home-user-select" name="user_id"></select>
-        <button type="submit">Show Recommendations</button>
-      </form>
-      <div class="status" id="home-status"></div>
-      <div class="demo-card">
-        <p><strong>Demo login</strong></p>
-        <p>Username: demo</p>
-        <p>Password: demo1234</p>
-      </div>
-    </main>
-    <script src="./app.js"></script>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
+

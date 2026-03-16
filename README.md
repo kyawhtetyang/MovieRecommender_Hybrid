@@ -3,7 +3,7 @@
 This repo is split into:
 
 - `backend/` - Flask web app, hybrid recommender, demo SQLite DB.
-- `frontend/` - Static landing page (placeholder for future UI upgrade).
+- `frontend/` - React + Vite UI (trimmed, product-focused).
 
 ## Backend quick start
 
@@ -22,5 +22,5 @@ Demo login:
 
 ## Frontend
 
-The frontend folder contains a simple static landing page you can deploy to Vercel.
+The frontend folder contains a Vite + React UI. Use it for the recruiter-facing demo.
 See `frontend/README.md` for details.
