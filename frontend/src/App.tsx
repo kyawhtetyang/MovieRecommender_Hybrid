@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { 
+import {
   Search,
   User as UserIcon,
   Home as HomeIcon,
